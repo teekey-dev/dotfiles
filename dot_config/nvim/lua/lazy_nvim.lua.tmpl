@@ -1,0 +1,235 @@
+{{- $datadog := include ".chezmoitemplates/datadog-secrets.toml.age" | decrypt | fromToml -}}
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
+end
+vim.opt.rtp:prepend(lazypath)
+require("lazy").setup({
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 }, -- color scheme
+	"junegunn/fzf", -- fuzzy search
+	{
+		"ibhagwan/fzf-lua",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+	"tpope/vim-fugitive", -- git
+	"tpope/vim-commentary", -- comment out
+
+	-- noice.nvim - better UI for messages, cmdline and popupmenu
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+	},
+
+	-- status line
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+	-- code completion
+	{
+		"saghen/blink.cmp",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		version = "1.*",
+	},
+	-- formatting
+	{
+		"stevearc/conform.nvim",
+		event = { "BufWritePre" },
+		cmd = { "ConformInfo" },
+	},
+	-- linting
+	{
+		"mfussenegger/nvim-lint",
+		event = { "BufReadPre", "BufNewFile" },
+	},
+	{
+		"mason-org/mason-lspconfig.nvim",
+		opts = {},
+		dependencies = {
+			{ "mason-org/mason.nvim", opts = {} },
+			"neovim/nvim-lspconfig",
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
+		},
+	},
+	"lewis6991/gitsigns.nvim", -- git signs/blames
+	{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} }, -- show indent lines
+	"cespare/vim-toml", -- toml
+	"ap/vim-css-color", -- highlight colors
+	"RRethy/vim-illuminate", -- highlight words on cursor
+	{
+		"kylechui/nvim-surround",
+		version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
+	},
+
+	-- Testing
+	{
+		"nvim-neotest/neotest",
+		dependencies = {
+			"nvim-neotest/nvim-nio",
+			"nvim-lua/plenary.nvim",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			-- Adapters
+			"nvim-neotest/neotest-plenary",
+			"nvim-neotest/neotest-vim-test", -- vim-test adapter as fallback
+			"olimorris/neotest-rspec",
+			"codymikol/neotest-kotlin",
+		},
+	},
+
+	-- file explorer
+	{
+		{
+			"nvim-neo-tree/neo-tree.nvim",
+			branch = "v3.x",
+			dependencies = {
+				"nvim-lua/plenary.nvim",
+				"MunifTanjim/nui.nvim",
+				"nvim-tree/nvim-web-devicons", -- optional, but recommended
+			},
+			lazy = false, -- neo-tree will lazily load itself
+		},
+	},
+	{
+		"antosha417/nvim-lsp-file-operations",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-neo-tree/neo-tree.nvim", -- makes sure that this loads after Neo-tree.
+		},
+		config = function()
+			require("lsp-file-operations").setup()
+		end,
+	},
+
+	-- breadscrum
+	"Bekaboo/dropbar.nvim",
+	-- optional, but required for fuzzy finder support
+	dependencies = {
+		"nvim-telescope/telescope-fzf-native.nvim",
+		build = "make",
+	},
+
+	-- nvim treesitter
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		lazy = false,
+	}, -- better syntax highlight and extra features
+	"RRethy/nvim-treesitter-endwise", -- nvim treesitter plugin for insert end for if, do, def...
+	"nvim-treesitter/nvim-treesitter-context", -- show context of code
+
+	-- Octo nvim
+	{
+		"pwntester/octo.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
+
+	-- Ruby
+	"vim-ruby/vim-ruby",
+	"tpope/vim-rails",
+	"tpope/vim-bundler",
+	"noprompt/vim-yardoc",
+
+	-- Javascript
+	"pangloss/vim-javascript",
+	"leafgarland/typescript-vim",
+	"peitalin/vim-jsx-typescript",
+	"styled-components/vim-styled-components",
+	"jparise/vim-graphql",
+
+	-- Rust
+	"rust-lang/rust.vim",
+	{
+		"mrcjkb/rustaceanvim",
+		version = "^6",
+		lazy = false,
+	},
+
+	-- Elixir
+	"elixir-editors/vim-elixir",
+
+	-- Go
+	"fatih/vim-go",
+
+	-- C++
+	"bfrg/vim-cpp-modern",
+
+	-- Terraform
+	"hashivim/vim-terraform",
+
+	-- lua
+	"marcuscf/vim-lua",
+
+	-- Java
+	"uiiaoo/java-syntax.vim",
+
+	-- Kotlin
+	"udalov/kotlin-vim",
+
+	-- Crystal
+	"vim-crystal/vim-crystal",
+
+	-- Code Kata
+	{
+		"kawre/leetcode.nvim",
+		build = ":TSUpdate html", -- if you have `nvim-treesitter` installed
+		dependencies = {
+			"ibhagwan/fzf-lua",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+		},
+		opts = function()
+			return require("config.leetcode")
+		end,
+	},
+
+	-- markdown rendering
+
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+		opts = {},
+	},
+
+	-- markdown preview
+	{
+		"brianhuster/live-preview.nvim",
+		dependencies = {
+			-- You can choose one of the following pickers
+			"ibhagwan/fzf-lua",
+		},
+	},
+
+	-- KMonad-vim
+	"kmonad/kmonad-vim",
+
+	-- datadog
+	{
+		"teekey-dev/datadog.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			"nvim-web-devicons", -- Optional
+		},
+		opts = {
+			api_key = "{{ $datadog.api_key }}",
+			app_key = "{{ $datadog.app_key }}",
+		},
+	},
+})

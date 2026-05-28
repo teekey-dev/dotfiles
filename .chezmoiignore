@@ -1,0 +1,4 @@
+.config/tmux/plugins
+.config/nvim/autoload
+.config/nvim/spell
+.config/nvim/.netrwhist

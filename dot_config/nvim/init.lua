@@ -1,0 +1,7 @@
+require("settings")
+require("lazy_nvim")
+require("colorscheme")
+require("custom_functions")
+require("highlight_group")
+require("lsp")
+require("jar-handler").setup()
