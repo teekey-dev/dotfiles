@@ -1,4 +1,3 @@
-{{- $datadog := include ".chezmoitemplates/datadog-secrets.toml.age" | decrypt | fromToml -}}
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -218,8 +217,8 @@ require("lazy").setup({
 
 	-- KMonad-vim
 	"kmonad/kmonad-vim",
-
-	-- datadog
+{{ if eq .profile "work" }}
+	-- datadog {{- $datadog := include ".chezmoitemplates/datadog-secrets.toml.age" | decrypt | fromToml }}
 	{
 		"teekey-dev/datadog.nvim",
 		dependencies = {
@@ -232,4 +231,5 @@ require("lazy").setup({
 			app_key = "{{ $datadog.app_key }}",
 		},
 	},
+{{ end -}}
 })

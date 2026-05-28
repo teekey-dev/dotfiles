@@ -1,0 +1,9 @@
+{{- $profile := promptChoiceOnce . "profile" "Profile" (list "work" "personal") -}}
+encryption = "age"
+
+[age]
+  identity = "~/.config/chezmoi/key.txt"
+  recipient = "age1jywywgtsar7phpj4vwxljlq7zflpdtznk8qcrvnfwpcc0u8a9feqmcmtgd"
+
+[data]
+  profile = "{{ $profile }}"
