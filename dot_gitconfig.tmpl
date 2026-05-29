@@ -2,11 +2,11 @@
 {{- if eq .profile "work" }}
 	name = Taehwa Kang
 	email = taehwa.kang@remember.co.kr
+	signingkey = 0C06F77F372DA8F2
 {{- else }}
 	name = Teekey
 	email = hegrecomm@gmail.com
 {{- end }}
-	signingkey = 0C06F77F372DA8F2
 [core]
 	editor = nvim
 	autocrlf = input
@@ -22,7 +22,9 @@
     autoSetupRemote = true
 [commit]
     verbose = true
+{{- if eq .profile "work" }}
 	gpgsign = true
+{{- end }}
 [rerere]
     enabled = true
 [help]
@@ -38,6 +40,7 @@
     auto = 1
 [fetch]
     prune = true
+{{- if eq .profile "work" }}
 [gpg]
 {{- if eq .chezmoi.os "darwin" }}
 {{- if eq .chezmoi.arch "arm64" }}
@@ -47,4 +50,5 @@
 {{- end }}
 {{- else if eq .chezmoi.os "linux" }}
 	program = /usr/bin/gpg
+{{- end }}
 {{- end }}
