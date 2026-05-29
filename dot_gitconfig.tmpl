@@ -1,0 +1,50 @@
+[user]
+{{- if eq .profile "work" }}
+	name = Taehwa Kang
+	email = taehwa.kang@remember.co.kr
+{{- else }}
+	name = Teekey
+	email = hegrecomm@gmail.com
+{{- end }}
+	signingkey = 0C06F77F372DA8F2
+[core]
+	editor = nvim
+	autocrlf = input
+	quotepath = false
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
+[merge]
+    conflictstyle = zdiff3
+[push]
+    default = current
+    autoSetupRemote = true
+[commit]
+    verbose = true
+	gpgsign = true
+[rerere]
+    enabled = true
+[help]
+    autocorrect = prompt
+[diff]
+    algorithm = histogram
+    colorMoved = default
+[branch]
+    sort = -committerdate
+[log]
+    date = relative
+[gc]
+    auto = 1
+[fetch]
+    prune = true
+[gpg]
+{{- if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.arch "arm64" }}
+	program = /opt/homebrew/bin/gpg
+{{- else }}
+	program = /usr/local/bin/gpg
+{{- end }}
+{{- else if eq .chezmoi.os "linux" }}
+	program = /usr/bin/gpg
+{{- end }}
