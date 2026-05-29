@@ -2,6 +2,7 @@
 .config/nvim/autoload
 .config/nvim/spell
 .config/nvim/.netrwhist
+.config/nvim/lazy-lock.json
 .config/fish/fish_variables
 .config/fish/completions
 
