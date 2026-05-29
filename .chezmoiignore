@@ -2,3 +2,11 @@
 .config/nvim/autoload
 .config/nvim/spell
 .config/nvim/.netrwhist
+.config/fish/fish_variables
+.config/fish/completions
+
+{{ if ne .profile "work" -}}
+.config/fish/conf.d/01_env_work.fish
+.config/fish/conf.d/03_gpg.fish
+.config/fish/conf.d/04_aws.fish
+{{- end }}
