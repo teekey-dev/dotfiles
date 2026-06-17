@@ -9,6 +9,7 @@ require("conform").setup({
 		ruby = { "rubocop" },
 		elixir = { "elixir-ls" },
 		toml = { "tombi" },
+		http = { "prettierd" },
 	},
 
 	-- Format on save
