@@ -5,11 +5,16 @@ require("conform").setup({
 		json = { "prettierd" },
 		jsonc = { "prettierd" },
 		yaml = { "prettierd" },
+		html = { "prettierd" },
+		css = { "prettierd" },
+		scss = { "prettierd" },
+		javascript = { "prettierd" },
+		typescript = { "prettierd" },
+		markdown = { "prettierd" },
 		rust = { "rust-analyzer" },
 		ruby = { "rubocop" },
 		elixir = { "elixir-ls" },
 		toml = { "tombi" },
-		http = { "prettierd" },
 	},
 
 	-- Format on save
